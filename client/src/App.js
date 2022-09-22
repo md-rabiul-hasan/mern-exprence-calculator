@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import NavigationBar from "./components/NavigationBar";
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <div>
+      <NavigationBar />
       <form onSubmit={handleSubmit}>
         <input type="number" onChange={handleInput} value={form.amount} placeholder="amount" name="amount" />
         <input type="text" onChange={handleInput} value={form.description} placeholder="description" name="description" />
