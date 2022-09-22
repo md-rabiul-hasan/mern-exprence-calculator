@@ -19,7 +19,10 @@ function App() {
     e.preventDefault();
     const res = await fetch("http://localhost:8081/transaction",{
       method: "POST",
-      body:form
+      body: JSON.stringify(form),
+      headers: {
+        'content-type' : 'application/json'
+      }
     })
     console.log(res)
   }
