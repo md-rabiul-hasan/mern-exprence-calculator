@@ -28,6 +28,13 @@ app.post('/transaction', async (req, res) => {
     })
 });
 
+app.get('/transaction', async (req, res) => {
+    const transactions = await Transaction.find({});
+    res.json({
+        data: transactions
+    })
+});
+
 
 await mongoose.connect('mongodb+srv://mdrabiulhasan:mdrabiulhasan@mern-expense.ecd8t5c.mongodb.net/?retryWrites=true&w=majority');
 console.log("mongo atlas database are connected");
