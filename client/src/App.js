@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 
 function App() {
 
-  const [form, setForm] = useState({
+  const initialForm = {
     amount: '',
     description: '',
     date: ''
-  });
+  };
+
+  const [form, setForm] = useState(initialForm);
 
   const [transactions, setTransactions] = useState([]);
 
@@ -19,7 +21,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:8081/transaction",{
+    await fetch("http://localhost:8081/api/v1/transaction",{
       method: "POST",
       body: JSON.stringify(form),
       headers: {
@@ -27,10 +29,11 @@ function App() {
       }
     })
     fetchTransaction();
+    setForm(initialForm);
   }
 
   const fetchTransaction = async () => {
-    const res = await fetch("http://localhost:8081/transaction");
+    const res = await fetch("http://localhost:8081/api/v1/transaction");
     const {data} = await res.json();
     setTransactions(data);
   }

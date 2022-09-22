@@ -2,7 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import Transaction from './models/transaction.js';
+import apiRouter from "./routes/api.js";
+import connect from "./config/database.js";
 
 const app = express();
 const PORT  = 8081;
@@ -11,33 +12,16 @@ const PORT  = 8081;
 app.use(cors());
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
-    res.send("Hello World")
-});
-
-app.post('/transaction', async (req, res) => {
-    const {amount, description, date} = req.body;
-    const transaction = new Transaction({
-        amount,
-        description,
-        date
-    });
-    await transaction.save();
-    res.json({
-        message: "Success"
-    })
-});
-
-app.get('/transaction', async (req, res) => {
-    const transactions = await Transaction.find({});
-    res.json({
-        data: transactions
-    })
-});
+// router
+app.use("/api/v1", apiRouter);
 
 
-await mongoose.connect('mongodb+srv://mdrabiulhasan:mdrabiulhasan@mern-expense.ecd8t5c.mongodb.net/?retryWrites=true&w=majority');
-console.log("mongo atlas database are connected");
+// connect database;
+await connect();
+
+
+
+
 
 app.listen( PORT, () => {
     console.log("Your application are running http://localhost:" + PORT);
