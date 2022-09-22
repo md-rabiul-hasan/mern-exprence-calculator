@@ -1,37 +1,13 @@
 import { useState, useEffect } from 'react';
 import NavigationBar from "./components/NavigationBar";
+import TransactionFrom from './components/TransactionForm';
 
 function App() {
 
-  const initialForm = {
-    amount: '',
-    description: '',
-    date: ''
-  };
-
-  const [form, setForm] = useState(initialForm);
 
   const [transactions, setTransactions] = useState([]);
 
-  const handleInput = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    })
-  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await fetch("http://localhost:8081/api/v1/transaction",{
-      method: "POST",
-      body: JSON.stringify(form),
-      headers: {
-        'content-type' : 'application/json'
-      }
-    })
-    fetchTransaction();
-    setForm(initialForm);
-  }
 
   const fetchTransaction = async () => {
     const res = await fetch("http://localhost:8081/api/v1/transaction");
@@ -48,12 +24,7 @@ function App() {
   return (
     <div>
       <NavigationBar />
-      <form onSubmit={handleSubmit}>
-        <input type="number" onChange={handleInput} value={form.amount} placeholder="amount" name="amount" />
-        <input type="text" onChange={handleInput} value={form.description} placeholder="description" name="description" />
-        <input type="date" onChange={handleInput} value={form.date} name="date" />
-        <button type="submit">Submit</button>
-      </form>
+      <TransactionFrom />
       <section>
         <table>
           <thead>
