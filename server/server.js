@@ -1,8 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 const app = express();
 const PORT  = 8081;
+
+// global middleware
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send("Hello World")

@@ -15,9 +15,13 @@ function App() {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form)
+    const res = await fetch("http://localhost:8081/transaction",{
+      method: "POST",
+      body:form
+    })
+    console.log(res)
   }
 
   return (
